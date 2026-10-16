@@ -68,34 +68,68 @@ Esta estructura permite mantener separadas las responsabilidades del sistema, fa
 
 ## Flujo del proyecto
 
-Dataset CIC-IDS2017
-        │
-        ▼
-Preprocesamiento
-(preprocess.py)
-        │
-        ▼
-Entrenamiento
-(train.py)
-        │
-        ▼
-Modelo de Machine Learning
-(Random Forest)
-        │
-        ▼
-API REST (FastAPI)
-        │
-        ├── Predicciones
-        ├── Métricas
-        └── Monitoreo
-        │
-        ▼
-Base de datos
-        │
-        ▼
-Dashboard y visualización
+```text
+                     ┌─────────────────┐
+                     │ CIC-IDS2017     │
+                     │ Dataset         │
+                     └────────┬────────┘
+                              │
+                              ▼
+                     ┌─────────────────┐
+                     │ Preprocesamiento│
+                     │ preprocess.py   │
+                     └────────┬────────┘
+                              │
+                              ▼
+                     ┌─────────────────┐
+                     │ Entrenamiento   │
+                     │ train.py        │
+                     └────────┬────────┘
+                              │
+                              ▼
+                     ┌─────────────────┐
+                     │ Random Forest   │
+                     │ Modelo ML       │
+                     └────────┬────────┘
+                              │
+                              ▼
+              ┌─────────────────────────────────┐
+              │ API REST (FastAPI)              │
+              │                                 │
+              │ /predict                        │
+              │ /metrics                        │
+              │ /health                         │
+              └───────────────┬─────────────────┘
+                              │
+               ┌──────────────┼──────────────┐
+               │              │              │
+               ▼              ▼              ▼
+      ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+      │Predicciones │ │  Métricas   │ │ Monitoreo   │
+      └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+             │               │               │
+             └───────┬───────┴───────┬──────┘
+                     │               │
+                     ▼               ▼
+             ┌─────────────────┐
+             │ Base de Datos   │
+             │ PostgreSQL      │
+             └────────┬────────┘
+                      │
+                      ▼
+             ┌─────────────────┐
+             │ Dashboard       │
+             │ Streamlit       │
+             └────────┬────────┘
+                      │
+                      ▼
+             ┌─────────────────┐
+             │ MITRE ATT&CK    │
+             │ Correlación     │
+             └─────────────────┘
+```
 
-Este flujo representa la visión general del sistema, desde la preparación de los datos hasta la exposición de resultados mediante una API y herramientas de visualización.
+Este flujo muestra la evolución prevista del proyecto, desde el procesamiento del dataset hasta la exposición de resultados mediante una API REST, almacenamiento de predicciones, visualización en dashboard e integración futura con MITRE ATT&CK.
 
 ## Dataset
 
