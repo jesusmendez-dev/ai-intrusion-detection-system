@@ -32,30 +32,29 @@ El proyecto busca combinar conocimientos de Ciencia de Datos, Inteligencia Artif
 El proyecto está organizado para separar claramente los componentes de Machine Learning, la API y la lógica de negocio.
 
 ids-detector/
-│
-├── app/              # API desarrollada con FastAPI
-├── ml/               # Entrenamiento y evaluación de modelos
-├── tests/            # Pruebas automatizadas
-├── docker/           # Configuración de contenedores
-├── requirements.txt
-└── README.md
+  app/              # API desarrollada con FastAPI
+  ml/               # Entrenamiento y evaluación de modelos
+  tests/            # Pruebas automatizadas
+  docker/           # Configuración de contenedores
+  requirements.txt
+  README.md
 
 API (FastAPI)
 app/
-├── api/              # Endpoints y rutas
-├── core/             # Configuración y seguridad
-├── db/               # Acceso a base de datos
-├── schemas/          # Validación de datos
-├── services/         # Lógica de negocio
-└── repositories/     # Operaciones de persistencia
+   api/              # Endpoints y rutas
+   core/             # Configuración y seguridad
+   db/               # Acceso a base de datos
+   schemas/          # Validación de datos
+   services/         # Lógica de negocio
+   repositories/     # Operaciones de persistencia
 
 Machine Learning
 ml/
-├── preprocess.py     # Limpieza y transformación de datos
-├── train.py          # Entrenamiento del modelo
-├── evaluate.py       # Evaluación de métricas
-├── datasets/         # Conjuntos de datos
-└── models/           # Modelos entrenados
+   preprocess.py     # Limpieza y transformación de datos
+   train.py          # Entrenamiento del modelo
+   evaluate.py       # Evaluación de métricas
+   datasets/         # Conjuntos de datos
+   models/           # Modelos entrenados
 
 Esta estructura permite mantener separadas las responsabilidades del sistema, facilitando la escalabilidad, el mantenimiento y la integración futura entre los componentes de Machine Learning y la API.
 
