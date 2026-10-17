@@ -29,22 +29,28 @@ El proyecto busca combinar conocimientos de Ciencia de Datos, Inteligencia Artif
 
 ## Arquitectura del proyecto
 
-El proyecto está organizado para separar claramente los componentes de Machine Learning, la API y la lógica de negocio.
-
 ```text
 ids-detector/
+
 ├── app/
 ├── ml/
+├── data/
+├── notebooks/
 ├── tests/
 ├── docker/
 ├── requirements.txt
 └── README.md
 ```
 
-### API (FastAPI)
+El proyecto está organizado para separar claramente los componentes de la API, el procesamiento de datos, Machine Learning y pruebas.
+
+---
+
+## API (FastAPI)
 
 ```text
 app/
+
 ├── api/
 ├── core/
 ├── db/
@@ -53,83 +59,163 @@ app/
 └── repositories/
 ```
 
-### Machine Learning
+### Responsabilidades
+
+- Exponer endpoints REST.
+- Validar datos de entrada y salida.
+- Gestionar la lógica de negocio.
+- Integrar modelos de Machine Learning.
+- Registrar métricas e información operativa.
+
+---
+
+## Machine Learning
 
 ```text
 ml/
+
 ├── preprocess.py
+├── feature_engineering.py
 ├── train.py
 ├── evaluate.py
 ├── datasets/
 └── models/
 ```
 
-Esta estructura permite mantener separadas las responsabilidades del sistema, facilitando la escalabilidad, el mantenimiento y la integración futura entre los componentes de Machine Learning y la API.
+### Responsabilidades
 
-## Flujo del proyecto
+- Preparación y limpieza de datos.
+- Ingeniería de características.
+- Entrenamiento de modelos.
+- Evaluación y métricas.
+- Almacenamiento de modelos entrenados.
+
+---
+
+## Datos
 
 ```text
-                     ┌─────────────────┐
-                     │ CIC-IDS2017     │
-                     │ Dataset         │
-                     └────────┬────────┘
-                              │
-                              ▼
-                     ┌─────────────────┐
-                     │ Preprocesamiento│
-                     │ preprocess.py   │
-                     └────────┬────────┘
-                              │
-                              ▼
-                     ┌─────────────────┐
-                     │ Entrenamiento   │
-                     │ train.py        │
-                     └────────┬────────┘
-                              │
-                              ▼
-                     ┌─────────────────┐
-                     │ Random Forest   │
-                     │ Modelo ML       │
-                     └────────┬────────┘
-                              │
-                              ▼
-              ┌─────────────────────────────────┐
-              │ API REST (FastAPI)              │
-              │                                 │
-              │ /predict                        │
-              │ /metrics                        │
-              │ /health                         │
-              └───────────────┬─────────────────┘
-                              │
-               ┌──────────────┼──────────────┐
-               │              │              │
-               ▼              ▼              ▼
-      ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-      │Predicciones │ │  Métricas   │ │ Monitoreo   │
-      └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
-             │               │               │
-             └───────┬───────┴───────┬──────┘
-                     │               │
-                     ▼               ▼
-             ┌─────────────────┐
-             │ Base de Datos   │
-             │ PostgreSQL      │
-             └────────┬────────┘
-                      │
-                      ▼
-             ┌─────────────────┐
-             │ Dashboard       │
-             │ Streamlit       │
-             └────────┬────────┘
-                      │
-                      ▼
-             ┌─────────────────┐
-             │ MITRE ATT&CK    │
-             │ Correlación     │
-             └─────────────────┘
+data/
+
+├── raw/
+├── processed/
+└── samples/
 ```
 
-Este flujo muestra la evolución prevista del proyecto, desde el procesamiento del dataset hasta la exposición de resultados mediante una API REST, almacenamiento de predicciones, visualización en dashboard e integración futura con MITRE ATT&CK.
+### Responsabilidades
+
+#### raw/
+
+Contiene los archivos originales del dataset CIC-IDS2017 sin modificaciones.
+
+```text
+data/raw/
+
+├── Monday-WorkingHours.pcap_ISCX.csv
+├── Tuesday-WorkingHours.pcap_ISCX.csv
+├── Wednesday-workingHours.pcap_ISCX.csv
+├── Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv
+├── Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv
+├── Friday-WorkingHours-Morning.pcap_ISCX.csv
+├── Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv
+└── Friday-WorkingHours-Afternoon-DDoS.pcap_ISCX.csv
+```
+
+#### processed/
+
+Contiene los datasets transformados y listos para entrenamiento.
+
+#### samples/
+
+Contiene subconjuntos de datos para pruebas rápidas.
+
+---
+
+## Análisis y Experimentación
+
+```text
+notebooks/
+
+├── 01_eda.ipynb
+├── 02_cleaning.ipynb
+├── 03_feature_engineering.ipynb
+└── 04_training.ipynb
+```
+
+### Responsabilidades
+
+- Análisis exploratorio de datos (EDA).
+- Validación de calidad de datos.
+- Experimentación y pruebas.
+- Documentación de resultados.
+
+---
+
+## Pruebas
+
+```text
+tests/
+```
+
+Contiene las pruebas unitarias y de integración del proyecto.
+
+---
+
+## Docker
+
+```text
+docker/
+
+├── Dockerfile
+└── docker-compose.yml
+```
+
+Contiene la configuración de contenedores para desarrollo y despliegue.
+
+---
+
+## Flujo del Proyecto
+
+```text
+CIC-IDS2017
+      │
+      ▼
+  data/raw
+      │
+      ▼
+ Exploración de Datos
+ (01_eda.ipynb)
+      │
+      ▼
+ Limpieza de Datos
+ (02_cleaning.ipynb)
+      │
+      ▼
+ Feature Engineering
+ (feature_engineering.py)
+      │
+      ▼
+ Dataset Procesado
+ (data/processed)
+      │
+      ▼
+ Entrenamiento
+ (train.py)
+      │
+      ▼
+ Modelo Entrenado
+ (ml/models)
+      │
+      ▼
+ FastAPI
+ (app/)
+      │
+      ▼
+ Predicciones
+      │
+      ▼
+ Dashboard y Métricas
+```
 
 ## Dataset
 
